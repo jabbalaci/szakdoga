@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"regexp"
+	"strings"
 
+	"github.com/PuerkitoBio/goquery"
 	"github.com/jabbalaci/szakdoga/lib/jweb"
 )
 
@@ -30,14 +31,29 @@ func fetchHTML(url string) string {
 	return string(content)
 }
 
+// This one also works.
+// func extractPDFURL(html string) string {
+// re := regexp.MustCompile(`<meta name="citation_pdf_url" content="([^"]+)">`)
+// match := re.FindStringSubmatch(html)
+// if len(match) != 2 {
+// panic("extractPDFURL: no match")
+// }
+//
+// return match[1]
+// }
+
 func extractPDFURL(html string) string {
-	re := regexp.MustCompile(`<meta name="citation_pdf_url" content="([^"]+)">`)
-	match := re.FindStringSubmatch(html)
-	if len(match) != 2 {
+	doc, err := goquery.NewDocumentFromReader(strings.NewReader(html))
+	if err != nil {
+		panic(err)
+	}
+
+	pdfURL := doc.Find(`meta[name="citation_pdf_url"]`).AttrOr("content", "")
+	if pdfURL == "" {
 		panic("extractPDFURL: no match")
 	}
 
-	return match[1]
+	return pdfURL
 }
 
 func readURL() string {

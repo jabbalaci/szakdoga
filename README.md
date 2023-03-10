@@ -22,4 +22,4 @@ majd megnyitja a dolgozatot PDF-ben, mely immár letölthető.
 
 ## Telepítés
 
-    $ go install github.com/jabbalaci/szakdoga
+    $ go install github.com/jabbalaci/szakdoga@latest

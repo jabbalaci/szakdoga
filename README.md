@@ -23,3 +23,7 @@ majd megnyitja a dolgozatot PDF-ben, mely immár letölthető.
 ## Telepítés
 
     $ go install github.com/jabbalaci/szakdoga@latest
+
+## A Go nyelv telepítése
+
+https://www.youtube.com/watch?v=Hz1u08TvWIQ
